@@ -64,10 +64,19 @@ if [ -f ${DOCROOT}/application/modules/home/views/Index.php ]; then
 fi
 
 cd /vagrant/CI3-party/ReactJquery
-##      7. 補 Admin, overwrite Admin
+##      7. 補 Admin/Admin_Controller
+##      7-1. 加 Admin Controller
+cp core/Admin_Controller.php ${DOCROOT}/application/core/
+cat <<EOF | tee -a ${DOCROOT}/application/core/MY_Controller.php
+// Admin controller
+require_once(APPPATH.'core/Admin_Controller.php');
+EOF
+##      7-2. 補 Admin, overwrite Admin
 cp -r modules/Admin/* ${DOCROOT}/application/modules/Admin/
+
 ##      8. Migrations
 cp migrations/002_Menu_Preferences.php ${DOCROOT}/application/migrations/
+
 ##      9. helpers, admin 改名 react_admin
 cp -r helpers/* ${DOCROOT}/application/helpers/
 
@@ -76,6 +85,13 @@ cp -r views/_layout/admin/*  ${DOCROOT}/application/views/_layout/admin/
 ##      10-b. 因為 ss_settings 改成 array, 所以 $ss_settings->xxx 要換成 $ss_settings['xxx']
 sed -i "s/\(\$ss_settings\)->\([a-z_]*\)/\$ss_settings['\2']/g" ${DOCROOT}/application/views/_layout/admin/footer.php
 sed -i "s/\(\$ss_settings\)->\([a-z_]*\)/\$ss_settings['\2']/g" ${DOCROOT}/application/views/_layout/admin/sidebar.php
+
+###     11 加 menu/subment/page
+cd /vagrant/CI3-party/ReactJquery
+cp -r modules/{menu,submenu,page} ${DOCROOT}/application/modules/
+
+###     13 蓋路由 Route (去 SmartACL-moduels, 改用 React)
+cp config/{config,routes}.php ${DOCROOT}/application/config/
 
 echo "*** Yout can go to: http://localhost/${PROJECTID}/welcome/importdatabase to migrate database!"
 echo "*** React is done."

@@ -1,27 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends MY_Controller
+class Admin extends AdminController
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('smarty_acl');
-        $this->load->helper('url');
-        $this->load->helper('form');
-        $this->load->library('form_validation');
-        $this->logged_in();
-        $this->smarty_acl->authorized();
-
         $this->load->model('admin_model', 'model');
-    }
-
-    protected function logged_in()
-    {
-        if (!$this->smarty_acl->logged_in()) {
-            return redirect('admin/login');
-        }
     }
 
     /*
@@ -29,50 +15,20 @@ class Admin extends MY_Controller
     */
     public function index()
     {
-        //print_r($this->session->userdata('login_admin_5dc3d3da95837cb55414978798a86fbee74dd54d'));
-        echo '<br><br>';
-        //var_dump($this->smarty_acl->authorized());
-        //$this->admin_views('index');
-        $data = [
-            'title' => "Admin",
-            //'ss_settings' => $this->db->get_where('system_settings', ['id' => 1])->row(),
-        ];
-        $data['ss_settings'] = array(
-            'id' => '1',
-            'nama' => 'Click-React',
-            'nohp' => '886436080088',
-            'alamat' => 'MoodleTW ....',
-            'logo' => 'noimage1.png',
-            'footer_right' => 'Version 1.0',
-            'footer_left' => 'Copyright @2023 Click-AP(MoodleTW) - All Rights Reserved.'
-        );
-        react_admin('index', $data); // react_helper
+        //react_admin('index'); // react_helper
+        $this->render_page('dashboard', $this->data);
     }
 
     public function dashboard()
     {
-        $data = [
-            'title' => "Admin",
-            //'ss_settings' => $this->db->get_where('system_settings', ['id' => 1])->row(),
-        ];
-        $data['ss_settings'] = array(
-            'id' => '1',
-            'nama' => 'Click-React',
-            'nohp' => '886436080088',
-            'alamat' => 'MoodleTW ....',
-            'logo' => 'noimage1.png',
-            'footer_right' => 'Version 1.0',
-            'footer_left' => 'Copyright @2023 Click-AP(MoodleTW) - All Rights Reserved.'
-        );
-        $this->load->view('_layout/admin/head', $data);
-        $this->load->view('index', $data);
+        $this->load->view('_layout/admin/head');
+        $this->load->view('dashboard');
     }
 
     public function menu()
     {
-//debugBreak();
         //$tmp  = $this->smarty_acl->authorized(); // True
-        $tmp = $this->smarty_acl->roles($result);
+        //$tmp = $this->smarty_acl->roles($result);
         $_admins = $this->smarty_acl->admins(false);
         $role_id = $_admins[0]['role_id'];
         $data = $this->model->menu($role_id);
