@@ -64,3 +64,5 @@ require_once(APPPATH.'core/Backend_Controller.php');
 
 // Frontend controller
 require_once(APPPATH.'core/Frontend_Controller.php');
+// Admin controller
+require_once(APPPATH.'core/Admin_Controller.php');

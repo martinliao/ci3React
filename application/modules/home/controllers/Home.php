@@ -11,12 +11,4 @@ class Home extends MY_Controller
     $this->load->view('index', $data);
   }
 
-  public function logout() {
-    $this->session->unset_userdata('user');
-    $this->session->unset_userdata('role');
-    $this->session->unset_userdata('id');
-    $this->session->sess_destroy();
-    redirect('home');
-  }
-
 }

@@ -22,6 +22,7 @@ class Migration_Menu_Preferences extends CI_Migration
         $this->settings['user_menu'] = 'user_menu';
         $this->settings['user_submenu'] = 'user_submenu';
         $this->settings['roles'] = $this->settings['prefix'].$tables['roles'];
+        $this->settings['system_icon'] = 'system_icon';
     }
 
     public function up()
@@ -108,6 +109,9 @@ class Migration_Menu_Preferences extends CI_Migration
         $this->db->insert($this->settings['user_submenu'],['id_submenu' => 44, 'id_menu' => 9, 'title' => 'Backup &amp; Restore', 'icon' => 'fa fa-database', 'url' => 'database', 'is_active' => 1, 'no_urut' => 2]);
         $this->db->insert($this->settings['user_submenu'],['id_submenu' => 45, 'id_menu' => 11, 'title' => 'Short Link', 'icon' => 'fa fa-tachometer',      'url' => 'url', 'is_active' => 1, 'no_urut' => 1]);
         /**************** End Insert Data ****************/
+        /**************** Start Create Tables ****************/
+        $this->icon();
+        /**************** End Insert Data ****************/
     }
 
     public function down()
@@ -115,6 +119,49 @@ class Migration_Menu_Preferences extends CI_Migration
         //Load settings
         $this->get_settings();
         //Drop tables
-        $this->dbforge->drop_table($this->settings['admin_preferences']);
+        $this->dbforge->drop_table($this->settings['user_menu']);
+        $this->dbforge->drop_table($this->settings['user_access']);
+        $this->dbforge->drop_table($this->settings['user_submenu']);
+        $this->dbforge->drop_table($this->settings['system_icon']);
+    }
+
+    function icon()
+    {
+        $this->dbforge->add_field(array(
+            'id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+            ),
+            'icon_name' => array('type' => 'VARCHAR', 'constraint' => '60', 'unsigned' => TRUE,),
+            'icon' => array('type' => 'VARCHAR', 'constraint' => '60', 'unsigned' => TRUE,),
+        ));
+        $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->create_table($this->settings['system_icon']);
+        /**************** End Create Tables ****************/
+        /**************** Start Set Foreign Keys ****************/
+        /**************** End Set Foreign Keys ****************/
+        /**************** Start Insert Data ****************/
+        $this->db->insert($this->settings['system_icon'],['id' => 1, 'icon_name' => 'f085', 'icon' => 'fa fa-fw fa fa-cogs']);
+        $this->db->insert($this->settings['system_icon'],['id' => 2, 'icon_name' => 'f0e4', 'icon' => 'fa fa-fw fa fa-tachometer']);
+        $this->db->insert($this->settings['system_icon'],['id' => 3, 'icon_name' => 'f1c0', 'icon' => 'fa fa-fw fa fa-database']);
+        $this->db->insert($this->settings['system_icon'],['id' => 4, 'icon_name' => 'f26e', 'icon' => 'fa fa-fw fa fa-500px']);
+        $this->db->insert($this->settings['system_icon'],['id' => 5, 'icon_name' => 'f270', 'icon' => 'fa fa-fw fa fa-amazon']);
+        $this->db->insert($this->settings['system_icon'],['id' => 6, 'icon_name' => 'f24e', 'icon' => 'fa fa-fw fa fa-balance-scale']);
+        $this->db->insert($this->settings['system_icon'],['id' => 7, 'icon_name' => 'f274', 'icon' => 'fa fa-fw fa fa-calendar-check-o']);
+        $this->db->insert($this->settings['system_icon'],['id' => 8, 'icon_name' => 'f272', 'icon' => 'fa fa-fw fa fa-calendar-minus-o']);
+        $this->db->insert($this->settings['system_icon'],['id' => 9, 'icon_name' => 'f271', 'icon' => 'fa fa-fw fa fa-calendar-plus-o']);
+        $this->db->insert($this->settings['system_icon'],['id' => 10, 'icon_name' => 'f0c5', 'icon' => 'fa fa-fw fa fa-clone']);
+        $this->db->insert($this->settings['system_icon'],['id' => 11, 'icon_name' => 'f268', 'icon' => 'fa fa-fw fa fa-chrome']);
+        $this->db->insert($this->settings['system_icon'],['id' => 12, 'icon_name' => 'f269', 'icon' => 'fa fa-fw fa fa-firefox']);
+        $this->db->insert($this->settings['system_icon'],['id' => 13, 'icon_name' => 'f280', 'icon' => 'fa fa-fw fa fa-fonticons']);
+        $this->db->insert($this->settings['system_icon'],['id' => 14, 'icon_name' => 'f265', 'icon' => 'fa fa-fw fa fa-get-pocket']);
+        $this->db->insert($this->settings['system_icon'],['id' => 15, 'icon_name' => 'f055', 'icon' => 'fa fa-fw fa fa-plus-circle']);
+        $this->db->insert($this->settings['system_icon'],['id' => 16, 'icon_name' => 'f007', 'icon' => 'fa fa-fw fa fa-user']);
+        $this->db->insert($this->settings['system_icon'],['id' => 17, 'icon_name' => 'f234', 'icon' => 'fa fa-fw fa fa-user-plus']);
+        $this->db->insert($this->settings['system_icon'],['id' => 18, 'icon_name' => 'f21b', 'icon' => 'fa fa-fw fa fa-user-secret']);
+        $this->db->insert($this->settings['system_icon'],['id' => 19, 'icon_name' => 'f235', 'icon' => 'fa fa-fw fa fa-user-times']);
+        $this->db->insert($this->settings['system_icon'],['id' => 20, 'icon_name' => 'f0c0', 'icon' => 'fa fa-fw fa fa-users']);
     }
 }

@@ -1,26 +1,27 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Menu extends MY_Controller
+//class Menu extends MY_Controller
+class Menu extends AdminController
 {
 
 	public function __construct()
 	{
-		if (!$this->session->userdata('role')) {
-			redirect('auth');
-		}
-		if ($this->session->userdata('role')) {
-			$this->db->select('*');
-			$this->db->from('user_access');
-			$this->db->join('user_submenu', 'user_access.id_menu=user_submenu.id_menu', 'inner');
-			$this->db->where('user_access.id_role', $this->session->userdata('role'));
-			$this->db->where('user_submenu.url', 'menu');
-			$access = $this->db->get()->result();
-			if (!$access) {
-				redirect('page');
-			}
-		}
 		parent::__construct();
+
+		$_admins = $this->smarty_acl->admins(false);
+		$role_id = $_admins[0]['role_id'];
+
+		$this->db->select('*');
+		$this->db->from('user_access');
+		$this->db->join('user_submenu', 'user_access.id_menu=user_submenu.id_menu', 'inner');
+		$this->db->where('user_access.id_role', $role_id);
+		$this->db->where('user_submenu.url', 'menu');
+		$access = $this->db->get()->result();
+		if (!$access) {
+			redirect('page');
+		}
+
 		$this->load->model('menu_model', 'model');
 	}
 
@@ -37,6 +38,7 @@ class Menu extends MY_Controller
 		$this->load->view('core/modals', $data);
 		$this->load->view('index', $data);
 	}
+
 	function getLists()
 	{
 		$data = array();
