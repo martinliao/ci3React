@@ -65,31 +65,31 @@
             <?php endif; ?>
             <span class="navbar-text">|</span>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url();?>admin">Admin</a>
+                <a class="nav-link" href="<?php echo base_url();?>Admins">Admin</a>
             </li>
             <?php if ($this->smarty_acl->logged_in()): ?>
                 <?php if ($this->smarty_acl->module_authorized('roles')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url();?>admin/roles">Roles</a>
+                        <a class="nav-link" href="<?php echo base_url();?>Admins/roles">Roles</a>
                     </li>
                 <?php endif; ?>
                 <?php if ($this->smarty_acl->module_authorized('modules')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url();?>admin/modules">Modules</a>
+                        <a class="nav-link" href="<?php echo base_url();?>Admins/modules">Modules</a>
                     </li>
                 <?php endif; ?>
                 <?php if ($this->smarty_acl->module_authorized('admins')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url();?>admin/admins">Admins</a>
+                        <a class="nav-link" href="<?php echo base_url();?>Admins/managers">Managers</a>
                     </li>
                 <?php endif; ?>
                 <?php if ($this->smarty_acl->module_authorized('users')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url();?>admin/users">Users</a>
+                        <a class="nav-link" href="<?php echo base_url();?>Admins/users">Users</a>
                     </li>
                 <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url();?>admin/logout">Logout</a>
+                    <a class="nav-link" href="<?php echo base_url();?>Admins/logout">Logout</a>
                 </li>
             <?php endif; ?>
         </ul>

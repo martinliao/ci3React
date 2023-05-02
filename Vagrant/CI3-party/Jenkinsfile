@@ -98,10 +98,10 @@ node ('master') {
                     sudo chown -R ${sshUsername}:apache ${DOCROOT}
                 fi
             """
-            sshPut remote: remote, from: 'CI3/ci3.sh', into: '.'
+            sshPut remote: remote, from: 'CI3/ci3-apache.sh', into: '.'
             // htaccess & Composer autoload
             sshCommand remote: remote, dryRun: dryRun, command: """
-                PROJECTID=${PROJECTID} DOCROOT=${DOCROOT} bash ~/ci3.sh
+                PROJECTID=${PROJECTID} DOCROOT=${DOCROOT} bash ~/ci3-apache.sh
                 cd ${DOCROOT}
                 sed -i "s/\\(.*config\\['composer_autoload'\\][ ]\\).*/\\1= APPPATH . '..\\/vendor\\/autoload.php';/g" application/config/config.php
                 rm -f composer.lock

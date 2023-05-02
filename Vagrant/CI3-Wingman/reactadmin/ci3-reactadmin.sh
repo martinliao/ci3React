@@ -26,4 +26,5 @@ mv ${DOCROOT}/application/views/_layout/Admin ${DOCROOT}/application/views/_layo
 
 sudo chown -R vagrant: /var/www/html/reactadmin
 
+echo "*** Plear login via admin/1232456"
 echo "*** reactadmin is done."

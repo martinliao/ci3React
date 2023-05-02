@@ -121,7 +121,7 @@ $config['default_role'] = 2;
  | Default route name for unauthorized access
  | Default:
  */
-$config['unauthorized_route'] = 'unauthorized';
+$config['unauthorized_route'] = 'page'; //'unauthorized';
 /*
  | -------------------------------------------------------------------------
  | Error and Messages Delimiters
@@ -239,6 +239,6 @@ $config['session_user_fields'] = [
 $config['cache_settings'] = [
     'status' => FALSE, // TRUE,FALSE enable/disable cache
     'time' => 300, //Time To Live, in seconds. 300 = 5 min
-    'driver' => 'memcached', //primary driver
+    'driver' => 'redis', //primary driver
     'driver_fallback' => 'file', //fall back driver
 ];

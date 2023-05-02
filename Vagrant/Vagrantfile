@@ -62,17 +62,6 @@ SCRIPT
       sudo mv composer.phar /usr/bin/composer
       composer -V
       sudo usermod -aG www-data vagrant
-      if ! grep -q "cd /var/www/html" ~/.bash_profile; then
-        echo -e "cd /var/www/html" | tee -a ~/.bash_profile > /dev/null 2>&1
-      fi
-      if grep -q "alias ll" ~/.bashrc; then
-        sed -i 's|[#]*alias[ ]*ll[ ]*=.*|alias ll="ls \$LS_OPTIONS -l"|' ~/.bashrc
-      else
-          echo -e "alias ll='ls \$LS_OPTIONS -l'" | tee -a ~/.bashrc > /dev/null 2>&1
-      fi
-      if ! grep -q "[ ]*set[ ]*mouse.*" ~/.vimrc; then
-          echo "set mouse-=a" >> ~/.vimrc
-      fi
     SHELL
     debian.vm.provision :shell, inline: $nodejsInstall
     debian.vm.provision :shell, path: "Vagrantfiles/mariadb-10.5.sh"
@@ -104,11 +93,23 @@ SCRIPT
     debian.vm.provision :shell, path: "CI3-party/patchs/fix_index_page.sh", privileged: false, env: {"DOCROOT" => "/var/www/html/#{PROJECTID}", "sshUsername" => "vagrant" }
 
     #   架Demo: reactadmin
-    debian.vm.provision :shell, path: "CI3-Wingman/reactadmin/ci3-reactadmin.sh", privileged: false, env: {"DOCROOT" => "/var/www/html/reactadmin", "PROJECTID" => "reactadmin", "sshUsername" => "vagrant" }
+    debian.vm.provision :shell, path: "CI3-Wingman/ReactAdmin/ci3-reactadmin.sh", privileged: false, env: {"DOCROOT" => "/var/www/html/reactadmin", "PROJECTID" => "reactadmin", "sshUsername" => "vagrant" }
     debian.vm.provision :shell, path: "vagrantfiles/gen_virtualhost.sh", privileged: false, env: {"DOCROOT" => "/var/www/html/reactadmin", "PROJECTID" => "reactadmin" }
 
     ##    6. 加 react 進 ci3
     debian.vm.provision :shell, path: "CI3-party/ReactJquery/ci3-JqueryReact.sh", privileged: false, env: {"DOCROOT" => "/var/www/html/#{PROJECTID}", "PROJECTID" => "#{PROJECTID}", "sshUsername" => "vagrant" }
-    
+
+    ## git clone
+    debian.vm.provision :shell, privileged: false, inline:  <<-SHELL
+      #git clone https://github.com/martinliao/ci3React.git
+      #cp -r ci3React/* /var/www/html/ci3React/
+      echo -e "cd /var/www/html" | tee -a ~/.bash_profile
+      if grep -q "alias ll" ~/.bashrc; then
+        sed -i 's|[#]*alias[ ]*ll[ ]*=.*|alias ll="ls \$LS_OPTIONS -l"|' ~/.bashrc
+      else
+          echo -e "alias ll='ls \$LS_OPTIONS -l'" | tee -a ~/.bashrc > /dev/null 2>&1
+      fi
+      echo "set mouse-=a" | tee -a ~/.vimrc
+    SHELL
   end
 end

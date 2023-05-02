@@ -49,7 +49,7 @@ class AuthAdmin extends MY_Controller
     public function logout()
     {
         $this->smarty_acl->logout();
-        return redirect('admin/login');
+        return redirect('Admins/login');
     }
 
     /**

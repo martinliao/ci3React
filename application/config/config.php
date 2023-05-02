@@ -105,7 +105,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -541,5 +541,6 @@ $config['proxy_ips'] = '';
 |
 */
 $config['modules_locations'] = array(
+    APPPATH.'admin_tools/' => '../admin_tools/',
     APPPATH.'modules/' => '../modules/',
 );

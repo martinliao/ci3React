@@ -25,7 +25,9 @@ class AdminController extends MY_Controller
      */
     protected $data = array();
 
-    protected $theme = '_layout/admin'; // default';
+    protected $theme = '_reactadmin/admin'; // default';
+
+    protected $role_id;
 
     /**
      * [__construct description]
@@ -48,17 +50,13 @@ class AdminController extends MY_Controller
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->logged_in();
-        $this->smarty_acl->authorized();
-
+#debugBreak();
+        #$_admins = $this->smarty_acl->admins(false);
+        #$this->role_id = $_admins[0]['role_id'];
         //Example data
-        // Site name
         $this->data['sitename'] = 'CodeIgniter-HMVC';
-
-        //Example data
-        // Browser tab
         $this->data['site_title'] = ucfirst('Admin Dashboard');
-
+        // for readtadmin
         $this->data = [
             'title' => "Admin",
             //'ss_settings' => $this->db->get_where('system_settings', ['id' => 1])->row(),
@@ -77,7 +75,7 @@ class AdminController extends MY_Controller
     protected function logged_in()
     {
         if (!$this->smarty_acl->logged_in()) {
-            return redirect('admin/login');
+            return redirect('Admins/login');
         }
     }
 

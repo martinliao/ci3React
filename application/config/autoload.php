@@ -136,5 +136,4 @@ $autoload['model'] = array();
 array_push($autoload['libraries'], 'form_validation');
 array_push($autoload['helper'], 'file');
 array_push($autoload['helper'], 'form');
-array_push($autoload['helper'], 'react_helper');
 array_push($autoload['helper'], 'assets_helper');

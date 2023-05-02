@@ -27,15 +27,17 @@ echo "*** SmartyACL 下載、設定及DB準備完成."
 
 ### 1. 準備 Migration(升級, importdatabase)
 cd ${DOCROOT}/application/config
+#       1-a. 啟用 migrate 功能.(並且改 type: change timestamp to sequential)
 sed -i "s/\(.*config\['migration_enabled'\][ ]\).*/\1= TRUE;/g" migration.php
-#    change timestamp to sequential
 sed -i "s/\(.*config\['migration_type'\][ ]\).*/\1= 'sequential';/g" migration.php
-
-#     1-b. 加路由(DB升級: importdatabase)
+#       1-b. 加路由(DB升級: importdatabase)
 echo "// SmartyaACL route" | tee -a ${DOCROOT}/application/config/routes.php
 echo "\$route['importdatabase'] = 'welcome/importdatabase';" | tee -a ${DOCROOT}/application/config/routes.php
-cp -r /CI3Party/SmartyACL/modules/welcome ${DOCROOT}/application/modules/Welcome
-rm ${DOCROOT}/application/controllers/Welcome.php # 要把 ci3 的 Welcome.php 刪除!!
+#       1-c. welcome/controllers/Welcome 加入 importdatabase
+cp -r /CI3Party/SmartyACL/modules/welcome ${DOCROOT}/application/modules/
+#       1-d. 把 ci3 內建的 Welcome.php 刪除!!
+rm ${DOCROOT}/application/controllers/Welcome.php 
+＃      doen.
 cat <<EOF
 *** 準備 Migration(升級, importdatabase) done.
     請用 http://localhost/${PROJECTID}/importdatabase 進行資料庫升級

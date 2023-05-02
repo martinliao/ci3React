@@ -313,14 +313,14 @@ class Migration_Create_Smarty_Acl extends CI_Migration
         /**************** Start Insert Data ****************/
         //Default roles
         $this->db->insert($this->settings['roles'],['name' => 'Super Admin']);
-        $this->db->insert($this->settings['roles'],['name' => 'Admin']);
-        $this->db->insert($this->settings['roles'],['name' => 'Demo']);
+        $this->db->insert($this->settings['roles'],['name' => 'Manager']);
+        $this->db->insert($this->settings['roles'],['name' => 'General User']);
         //Default admin
         $this->db->insert($this->settings['admins'],[
              'username' => 'admin',
              'password' => '$2y$10$TmJKG3yV8o7kCycAdQI0/.7jJ5uhO3RC9pyJOMlbFHmbEzUk8JMfu',
              'name' => 'Administrator',
-             'email' => 'admin@admin.com',
+             'email' => 'admin@click-ap.com',
              'role_id' => 1,
              'status' => 'active',
              'ip' => '172.19.0.1',
@@ -328,6 +328,19 @@ class Migration_Create_Smarty_Acl extends CI_Migration
              'created_at' => date('Y-m-d H:i:s'),
              'updated_at' => date('Y-m-d H:i:s')
         ]);
+        //Default manager
+        $this->db->insert($this->settings['admins'],[
+            'username' => 'martin',
+            'password' => '$2y$10$TmJKG3yV8o7kCycAdQI0/.7jJ5uhO3RC9pyJOMlbFHmbEzUk8JMfu',
+            'name' => 'Martin',
+            'email' => 'martin@click-ap.com',
+            'role_id' => 2,
+            'status' => 'active',
+            'ip' => '172.19.0.1',
+            'email_verified_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+       ]);
         /**************** End Insert Data ****************/
     }
 
